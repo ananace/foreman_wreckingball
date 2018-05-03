@@ -47,10 +47,18 @@ module ForemanWreckingball
 
     def submit_remediate
       raise Foreman::Exception, 'VMware Status can not be remediated.' unless @status.class.respond_to?(:supports_remediate?) && @status.class.supports_remediate?
-      flash[:success] = _('Remediate VM task for %s was successfully scheduled.') % @host
       task = User.as_anonymous_admin do
-        ::ForemanTasks::Triggering.new_from_params(triggering_params).trigger(@status.class.remediate_action, @host)
+        triggering = ::ForemanTasks::Triggering.new_from_params(triggering_params)
+        if triggering.future?
+          triggering.parse_start_at!
+          triggering.parse_start_before!
+        else
+          triggering.start_at ||= Time.zone.now
+        end
+
+        triggering.trigger(@status.class.remediate_action, @host)
       end
+      flash[:success] = _('Remediate VM task for %s was successfully scheduled.') % @host
       redirect_to(foreman_tasks_task_path(task.id))
     end
 
