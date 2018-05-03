@@ -1,7 +1,8 @@
 module ForemanWreckingball
   class HostsController < ::HostsController
-    before_action :find_resource, :only => [:remediate]
-    before_action :find_status, :only => [:remediate]
+    include ::ForemanTasks::Concerns::Parameters::Triggering
+    before_action :find_resource, :only => [:submit_remediate, :schedule_remediate]
+    before_action :find_status, :only => [:submit_remediate, :schedule_remediate]
 
     def status_dashboard
       statuses = [
@@ -40,11 +41,15 @@ module ForemanWreckingball
       redirect_to(foreman_tasks_task_path(task.id))
     end
 
-    def remediate
+    def schedule_remediate
+      @triggering = ForemanTasks::Triggering.new mode: :immediate
+    end
+
+    def submit_remediate
       raise Foreman::Exception, 'VMware Status can not be remediated.' unless @status.class.respond_to?(:supports_remediate?) && @status.class.supports_remediate?
       flash[:success] = _('Remediate VM task for %s was successfully scheduled.') % @host
       task = User.as_anonymous_admin do
-        ::ForemanTasks.async_task(@status.class.remediate_action, @host)
+        ::ForemanTasks::Triggering.new_from_params(triggering_params).trigger(@status.class.remediate_action, @host)
       end
       redirect_to(foreman_tasks_task_path(task.id))
     end
@@ -61,7 +66,7 @@ module ForemanWreckingball
         'view'
       when 'refresh_status_dashboard'
         'refresh_vmware_status'
-      when 'remediate'
+      when /remediate$/
         'remediate_vmware_status'
       else
         super

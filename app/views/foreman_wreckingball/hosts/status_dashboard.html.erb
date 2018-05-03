@@ -1,4 +1,7 @@
 <% title _('VMware Status Overview') %>
+<%= javascript "foreman_wreckingball/modal" %>
+<%= javascript 'foreman_tasks/trigger_form' %>
+<%= stylesheet 'foreman_tasks/trigger_form' %>
 
 <%=
   if @newest_data
@@ -7,3 +10,19 @@
     render 'status_dashboard_empty'
   end
 %>
+<div id="confirmation-modal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><%= _('Please Confirm') %></h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><%= _('Cancel') %></button>
+        <button type="button" class="btn btn-primary" data-action="submit" onclick="submit_modal_form()"><%= _('Submit') %></button>
+      </div>
+    </div>
+  </div>
+</div>
