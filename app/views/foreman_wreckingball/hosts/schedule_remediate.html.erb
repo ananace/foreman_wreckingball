@@ -1,0 +1,11 @@
+<% title _('Remediate %s') % @host %>
+
+<%= form_for ForemanTasks::Task.new, :url => submit_remediate_host_path(:id => @host.id, :status_id => @status), :html => {:id => 'schedule_remediate_form'} do |f| %>
+  <%= trigger_selector f, @triggering %>
+
+  <%= submit_or_cancel f, false, :cancel_path => { :controller => :'foreman_wreckingball/hosts', :action => :status_dashboard } %>
+<% end %>
+
+<% if @status.class.dangerous_remediate? -%>
+<div class="alert alert-warning">Caution, This will cause a service interruption.</div>
+<% end -%>
