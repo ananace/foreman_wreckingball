@@ -7,5 +7,5 @@
 <% end %>
 
 <% if @status.class.dangerous_remediate? -%>
-<div class="alert alert-warning">Caution, This will cause a service interruption.</div>
+<div class="alert alert-warning"><%= _('Caution, This will cause a service interruption.') %></div>
 <% end -%>

@@ -22,22 +22,22 @@ function show_modal(element, url) {
     .append('<div class="modal-spinner spinner spinner-lg"></div>');
   $('#confirmation-modal').modal();
   $('#confirmation-modal .modal-body').load(url + ' #content',
-      function(response, status, xhr) {
-        $('#confirmation-modal .form-actions').remove();
-        $('#confirmation-modal .col-md-6')
-          .removeClass('col-md-6')
-          .addClass('col-md-8');
+    function(response, status, xhr) {
+      $('#confirmation-modal .form-actions').remove();
+      $('#confirmation-modal .col-md-6')
+        .removeClass('col-md-6')
+        .addClass('col-md-8');
 
-        var b = $('#confirmation-modal button[data-action="submit"]');
-        if ($(element).attr('data-submit-class')) {
-          b.attr('class', 'btn ' + $(element).attr('data-submit-class'));
-        } else {
-          b.attr('class', 'btn btn-primary');
-        }
+      var submit_button = $('#confirmation-modal button[data-action="submit"]');
+      if ($(element).attr('data-submit-class')) {
+        submit_button.attr('class', 'btn ' + $(element).attr('data-submit-class'));
+      } else {
+        submit_button.attr('class', 'btn btn-primary');
+      }
 
-        trigger_form_selector_binds('schedule_remediate_form', url);
-        $('#loading').hide();
-      });
+      trigger_form_selector_binds('schedule_remediate_form', url);
+      $('#loading').hide();
+    });
   return false;
 }
 

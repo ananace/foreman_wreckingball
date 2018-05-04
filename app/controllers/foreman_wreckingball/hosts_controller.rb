@@ -42,7 +42,7 @@ module ForemanWreckingball
     end
 
     def schedule_remediate
-      @triggering = ForemanTasks::Triggering.new mode: :immediate
+      @triggering = ForemanTasks::Triggering.new(mode: :immediate)
     end
 
     def submit_remediate
@@ -74,7 +74,7 @@ module ForemanWreckingball
         'view'
       when 'refresh_status_dashboard'
         'refresh_vmware_status'
-      when /remediate$/
+      when 'schedule_remediate', 'submit_remediate'
         'remediate_vmware_status'
       else
         super
