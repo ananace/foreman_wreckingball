@@ -36,22 +36,22 @@ module ForemanWreckingball
 
     describe '#schedule_remediate' do
       let(:host) do
-        FactoryGirl.create(:host, :with_wreckingball_statuses)
+        FactoryBot.create(:host, :with_wreckingball_statuses)
       end
 
       test 'shows a remediation schedule page' do
-        get :schedule_remediate, { status_id: host.vmware_operatingsystem_status_object.id, id: host.id }, set_session_user
+        get :schedule_remediate, params: { status_id: host.vmware_operatingsystem_status_object.id, id: host.id }, session: set_session_user
         assert_response :success
       end
 
       test 'returns not found when host id is invalid' do
-        get :schedule_remediate, { status_id: nil, id: 'invalid' }, set_session_user
+        get :schedule_remediate, params: { status_id: nil, id: 'invalid' }, session: set_session_user
         assert_response :not_found
       end
 
       test 'returns not found when status id is invalid' do
-        FactoryGirl.create(:host, :with_wreckingball_statuses)
-        get :schedule_remediate, { status_id: 'invalid', id: host.id }, set_session_user
+        FactoryBot.create(:host, :with_wreckingball_statuses)
+        get :schedule_remediate, params: { status_id: 'invalid', id: host.id }, session: set_session_user
         assert_response :not_found
       end
     end
