@@ -72,7 +72,7 @@ module ForemanWreckingball
     end
 
     def find_status
-      @status = ForemanWreckingball::OperatingsystemStatus.new id: params[:status_id], host_id: @host.id
+      @status = HostStatus::Status.find_by!(:id => params[:status_id], :host_id => @host.id)
     end
 
     def action_permission
