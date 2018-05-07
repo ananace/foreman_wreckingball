@@ -8,7 +8,7 @@ module Actions
 
         def delay(delay_options, host)
           action_subject(host)
-          super delay_options, host
+          super(delay_options, host)
         end
 
         def plan(host)

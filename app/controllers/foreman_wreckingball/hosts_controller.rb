@@ -67,8 +67,9 @@ module ForemanWreckingball
     private
 
     def triggering_params
-      self.class.triggering_params_filter.filter_params(params, parameter_filter_context, :triggering).merge \
-        self.class.triggering_params_filter.filter_params(params, parameter_filter_context, :foreman_tasks_triggering)
+      %i[triggering foreman_tasks_triggering].inject({}) do |result, param_name|
+        result.merge(self.class.triggering_params_filter.filter_params(params, parameter_filter_context, param_name))
+      end
     end
 
     def find_status

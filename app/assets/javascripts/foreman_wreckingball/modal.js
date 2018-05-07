@@ -24,9 +24,6 @@ function show_modal(element, url) {
   $('#confirmation-modal .modal-body').load(url + ' #content',
     function(response, status, xhr) {
       $('#confirmation-modal .form-actions').remove();
-      $('#confirmation-modal .col-md-6')
-        .removeClass('col-md-6')
-        .addClass('col-md-8');
 
       var submit_button = $('#confirmation-modal button[data-action="submit"]');
       if ($(element).attr('data-submit-class')) {
