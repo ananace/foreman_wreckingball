@@ -64,8 +64,13 @@ module ForemanWreckingball
 
     private
 
+    def triggering_params
+      self.class.triggering_params_filter.filter_params(params, parameter_filter_context, :triggering).merge \
+        self.class.triggering_params_filter.filter_params(params, parameter_filter_context, :foreman_tasks_triggering)
+    end
+
     def find_status
-      @status = HostStatus::Status.find_by!(:id => params[:status_id], :host_id => @host.id)
+      @status = ForemanWreckingball::OperatingsystemStatus.new id: params[:status_id], host_id: @host.id
     end
 
     def action_permission
