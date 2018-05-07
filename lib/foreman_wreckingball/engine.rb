@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'dynflow'
 require 'foreman-tasks'
 
@@ -23,7 +25,7 @@ module ForemanWreckingball
 
     initializer 'foreman_wreckingball.register_plugin', :before => :finisher_hook do |_app|
       Foreman::Plugin.register :foreman_wreckingball do
-        requires_foreman '>= 1.16'
+        requires_foreman '>= 1.17'
 
         security_block :foreman_wreckingball do
           permission :refresh_vmware_status_hosts, {
@@ -82,7 +84,7 @@ module ForemanWreckingball
     end
 
     initializer 'foreman_wreckingball.register_gettext', after: :load_config_initializers do |_app|
-      locale_dir = File.join(File.expand_path('../../..', __FILE__), 'locale')
+      locale_dir = File.join(File.expand_path('../..', __dir__), 'locale')
       locale_domain = 'foreman_wreckingball'
       Foreman::Gettext::Support.add_text_domain locale_domain, locale_dir
     end

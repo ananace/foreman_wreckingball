@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_plugin_helper'
 
 module Actions
@@ -14,7 +16,7 @@ module Actions
 
         let(:action_class) { ::Actions::ForemanWreckingball::Vmware::SyncComputeResource }
         let(:compute_resource) do
-          FactoryGirl.create(
+          FactoryBot.create(
             :vmware_cr,
             uuid: 'Solutions'
           )

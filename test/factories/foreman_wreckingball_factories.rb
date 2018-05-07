@@ -1,4 +1,6 @@
-FactoryGirl.define do
+# frozen_string_literal: true
+
+FactoryBot.define do
   factory :vmware_facet, class: 'ForemanWreckingball::VmwareFacet' do
     vmware_cluster
     tools_state 2 #:toolsOk

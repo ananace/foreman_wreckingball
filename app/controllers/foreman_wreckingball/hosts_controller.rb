@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ForemanWreckingball
   class HostsController < ::HostsController
     include ::ForemanTasks::Concerns::Parameters::Triggering

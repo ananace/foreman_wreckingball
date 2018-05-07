@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_plugin_helper'
 
 module ForemanWreckingball
@@ -9,7 +11,7 @@ module ForemanWreckingball
     should belong_to(:host)
 
     let(:operatingsystem) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :operatingsystem,
         architectures: [architectures(:x86_64)],
         major: 6,
@@ -19,7 +21,7 @@ module ForemanWreckingball
       )
     end
     let(:host) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :host,
         :managed,
         :with_vmware_facet,
@@ -35,7 +37,7 @@ module ForemanWreckingball
     end
 
     test '#relevant is only for hosts with a vmware facet' do
-      h = FactoryGirl.build(:host, :managed)
+      h = FactoryBot.build(:host, :managed)
       refute ForemanWreckingball::ToolsStatus.new(host: h).relevant?
       assert status.relevant?
     end
