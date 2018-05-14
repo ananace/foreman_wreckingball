@@ -7,7 +7,7 @@
 <%= alert(:text => _('This will cause a service interruption.'), :class => 'alert-warning', :close => false) %>
 <% end -%>
 
-<%= form_for @triggering, :url => submit_remediate_host_path(:id => @host.id, :status_id => @status), :html => {:id => 'schedule_remediate_form'} do |f| %>
+<%= form_for @triggering, :url => submit_remediate_host_path(:id => @host.id, :status_id => @status), :html => { :class => 'form-horizontal', :id => 'schedule_remediate_form' } do |f| %>
   <%= javascript_tag do %>
     $(function() { trigger_form_selector_binds('<%= f.options[:html][:id] %>','<%= f.object_name %>') });
   <% end %>
