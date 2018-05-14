@@ -32,6 +32,8 @@ function show_modal(element, url) {
         submit_button.attr('class', 'btn btn-primary');
       }
 
+      $('#confirmation-modal a[rel="popover"]').popover();
+
       trigger_form_selector_binds('schedule_remediate_form', url);
       $('#loading').hide();
     });
